@@ -1,0 +1,256 @@
+Index: src/main/java/jom/com/softserve/s3/task5/ClientType.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package jom.com.softserve.s3.task5;\r\n\r\nenum ClientType {\r\n\t// Write your code here\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/jom/com/softserve/s3/task5/ClientType.java b/src/main/java/jom/com/softserve/s3/task5/ClientType.java
+--- a/src/main/java/jom/com/softserve/s3/task5/ClientType.java	
++++ b/src/main/java/jom/com/softserve/s3/task5/ClientType.java	
+@@ -1,5 +1,28 @@
+ package jom.com.softserve.s3.task5;
+ 
+ enum ClientType {
+-	// Write your code here
++    NEW(1),
++    SILVER(12),
++    GOLD(30),
++    PLATINUM(60);
++
++    private int months;
++
++
++    ClientType(int months) {
++        this.months = months;
++    }
++
++    public double discount() {
++
++        return switch (months) {
++            case 1 -> 1.0;
++            case 12 -> (100 - months * 0.25) / 100;
++            case 30 -> (100 - months * 0.3) / 100;
++            case 60 -> (100 - months * 0.35) / 100;
++
++            default -> 0.0;
++        };
++    }
++
+ }
+Index: src/test/java/jom/com/softserve/s3/task5/Task5Test.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package jom.com.softserve.s3.task5;\r\n\r\nimport static org.junit.jupiter.api.Assertions.assertEquals;\r\nimport static org.junit.jupiter.api.Assertions.assertNotNull;\r\nimport static org.junit.jupiter.api.Assertions.assertTrue;\r\nimport static org.junit.jupiter.api.Assertions.fail;\r\n\r\nimport java.lang.reflect.Constructor;\r\nimport java.lang.reflect.Field;\r\nimport java.lang.reflect.Method;\r\nimport java.lang.reflect.Modifier;\r\nimport java.util.stream.Stream;\r\n\r\nimport org.junit.jupiter.api.DisplayName;\r\nimport org.junit.jupiter.api.Test;\r\nimport org.junit.jupiter.params.ParameterizedTest;\r\nimport org.junit.jupiter.params.provider.Arguments;\r\nimport org.junit.jupiter.params.provider.MethodSource;\r\nimport org.junit.jupiter.params.provider.ValueSource;\r\n\r\nclass Task5Test {\r\n\tprivate static String CLIENT_TYPE = \"jom.com.softserve.s3.task5.ClientType\";\r\n\r\n//\t@DisplayName(\"Check that ClientType is enum\")\r\n//\t@Test\r\n//\tpublic void isClientTypeEnumTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(CLIENT_TYPE);\r\n//\t\t\tassertTrue(clazz.isEnum());\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"There is no ClientType enum\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that ClientType contains appropriate value\")\r\n//\t@ParameterizedTest\r\n//\t@ValueSource(strings = { \"NEW\", \"SILVER\", \"GOLD\", \"PLATINUM\", \"months\" })\r\n//\tpublic void hasFieldTest(String name) {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(CLIENT_TYPE);\r\n//\t\t\tField[] fields = clazz.getDeclaredFields();\r\n//\t\t\tboolean isField = false;\r\n//\t\t\tfor (Field field : fields) {\r\n//\t\t\t\tif (name.equals(field.getName())) {\r\n//\t\t\t\t\tisField = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isField);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"There is no ClientType enum\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'mounths' field is private\")\r\n//\t@Test\r\n//\tvoid isMonthsFieldPrivateTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(CLIENT_TYPE);\r\n//\t\t\tField field = clazz.getDeclaredField(\"months\");\r\n//\t\t\tassertTrue(Modifier.isPrivate(field.getModifiers()));\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t} catch (NoSuchFieldException e) {\r\n//\t\t\tfail(\"There is no mounths field\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'months' field is int\")\r\n//\t@Test\r\n//\tvoid isMonthsFieldIntTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(CLIENT_TYPE);\r\n//\t\t\tField field = clazz.getDeclaredField(\"months\");\r\n//\t\t\tassertTrue(field.getType().equals(int.class));\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t} catch (NoSuchFieldException e) {\r\n//\t\t\tfail(\"There is no mounths field\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'discount' method is public\")\r\n//\t@Test\r\n//\tvoid isDiscountMethodPublic() {\r\n//\t\tboolean isDiscountMethod = false;\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(CLIENT_TYPE);\r\n//\t\t\tMethod[] declaredMethods = clazz.getDeclaredMethods();\r\n//\t\t\tfor (Method method : declaredMethods) {\r\n//\t\t\t\tif (\"discount\".equals(method.getName())) {\r\n//\t\t\t\t\tassertTrue(Modifier.isPublic(method.getModifiers()));\r\n//\t\t\t\t\tisDiscountMethod = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t\tassertTrue(isDiscountMethod);\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that ClientType enum has a constructor\")\r\n//\t@Test\r\n//\tvoid hasClientTypeConstructorTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(CLIENT_TYPE);\r\n//\t\t\tConstructor<?>[] constructors = clazz.getDeclaredConstructors();\r\n//\t\t\tassertNotNull(constructors);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\tprivate static Stream<Arguments> providePriceWithDiscountForClientType() {\r\n//\t\treturn Stream.of(Arguments.of(1294.48, ClientType.NEW), \r\n//\t\t\t\tArguments.of(1255.6456, ClientType.SILVER),\r\n//\t\t\t\tArguments.of(1177.9768000000001, ClientType.GOLD),\r\n//\t\t\t\tArguments.of(1022.6392000000001, ClientType.PLATINUM));\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that discount is calculated properly for special type of client\")\r\n//\t@ParameterizedTest\r\n//\t@MethodSource(\"providePriceWithDiscountForClientType\")\r\n//\tvoid drawLineTest(double price, ClientType clientType) {\r\n//\t\tassertEquals(price, clientType.discount() * 1294.48);\r\n//\t}\r\n\r\n}\r\n
+===================================================================
+diff --git a/src/test/java/jom/com/softserve/s3/task5/Task5Test.java b/src/test/java/jom/com/softserve/s3/task5/Task5Test.java
+--- a/src/test/java/jom/com/softserve/s3/task5/Task5Test.java	
++++ b/src/test/java/jom/com/softserve/s3/task5/Task5Test.java	
+@@ -21,107 +21,107 @@
+ class Task5Test {
+ 	private static String CLIENT_TYPE = "jom.com.softserve.s3.task5.ClientType";
+ 
+-//	@DisplayName("Check that ClientType is enum")
+-//	@Test
+-//	public void isClientTypeEnumTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(CLIENT_TYPE);
+-//			assertTrue(clazz.isEnum());
+-//		} catch (ClassNotFoundException e) {
+-//			fail("There is no ClientType enum");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that ClientType contains appropriate value")
+-//	@ParameterizedTest
+-//	@ValueSource(strings = { "NEW", "SILVER", "GOLD", "PLATINUM", "months" })
+-//	public void hasFieldTest(String name) {
+-//		try {
+-//			Class<?> clazz = Class.forName(CLIENT_TYPE);
+-//			Field[] fields = clazz.getDeclaredFields();
+-//			boolean isField = false;
+-//			for (Field field : fields) {
+-//				if (name.equals(field.getName())) {
+-//					isField = true;
+-//				}
+-//			}
+-//			assertTrue(isField);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("There is no ClientType enum");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that 'mounths' field is private")
+-//	@Test
+-//	void isMonthsFieldPrivateTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(CLIENT_TYPE);
+-//			Field field = clazz.getDeclaredField("months");
+-//			assertTrue(Modifier.isPrivate(field.getModifiers()));
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		} catch (NoSuchFieldException e) {
+-//			fail("There is no mounths field");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that 'months' field is int")
+-//	@Test
+-//	void isMonthsFieldIntTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(CLIENT_TYPE);
+-//			Field field = clazz.getDeclaredField("months");
+-//			assertTrue(field.getType().equals(int.class));
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		} catch (NoSuchFieldException e) {
+-//			fail("There is no mounths field");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that 'discount' method is public")
+-//	@Test
+-//	void isDiscountMethodPublic() {
+-//		boolean isDiscountMethod = false;
+-//		try {
+-//			Class<?> clazz = Class.forName(CLIENT_TYPE);
+-//			Method[] declaredMethods = clazz.getDeclaredMethods();
+-//			for (Method method : declaredMethods) {
+-//				if ("discount".equals(method.getName())) {
+-//					assertTrue(Modifier.isPublic(method.getModifiers()));
+-//					isDiscountMethod = true;
+-//				}
+-//			}
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//		assertTrue(isDiscountMethod);
+-//	}
+-//
+-//	@DisplayName("Check that ClientType enum has a constructor")
+-//	@Test
+-//	void hasClientTypeConstructorTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(CLIENT_TYPE);
+-//			Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+-//			assertNotNull(constructors);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//	}
+-//
+-//	private static Stream<Arguments> providePriceWithDiscountForClientType() {
+-//		return Stream.of(Arguments.of(1294.48, ClientType.NEW), 
+-//				Arguments.of(1255.6456, ClientType.SILVER),
+-//				Arguments.of(1177.9768000000001, ClientType.GOLD),
+-//				Arguments.of(1022.6392000000001, ClientType.PLATINUM));
+-//	}
+-//
+-//	@DisplayName("Check that discount is calculated properly for special type of client")
+-//	@ParameterizedTest
+-//	@MethodSource("providePriceWithDiscountForClientType")
+-//	void drawLineTest(double price, ClientType clientType) {
+-//		assertEquals(price, clientType.discount() * 1294.48);
+-//	}
++	@DisplayName("Check that ClientType is enum")
++	@Test
++	public void isClientTypeEnumTest() {
++		try {
++			Class<?> clazz = Class.forName(CLIENT_TYPE);
++			assertTrue(clazz.isEnum());
++		} catch (ClassNotFoundException e) {
++			fail("There is no ClientType enum");
++		}
++	}
++
++	@DisplayName("Check that ClientType contains appropriate value")
++	@ParameterizedTest
++	@ValueSource(strings = { "NEW", "SILVER", "GOLD", "PLATINUM", "months" })
++	public void hasFieldTest(String name) {
++		try {
++			Class<?> clazz = Class.forName(CLIENT_TYPE);
++			Field[] fields = clazz.getDeclaredFields();
++			boolean isField = false;
++			for (Field field : fields) {
++				if (name.equals(field.getName())) {
++					isField = true;
++				}
++			}
++			assertTrue(isField);
++		} catch (ClassNotFoundException e) {
++			fail("There is no ClientType enum");
++		}
++	}
++
++	@DisplayName("Check that 'mounths' field is private")
++	@Test
++	void isMonthsFieldPrivateTest() {
++		try {
++			Class<?> clazz = Class.forName(CLIENT_TYPE);
++			Field field = clazz.getDeclaredField("months");
++			assertTrue(Modifier.isPrivate(field.getModifiers()));
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		} catch (NoSuchFieldException e) {
++			fail("There is no mounths field");
++		}
++	}
++
++	@DisplayName("Check that 'months' field is int")
++	@Test
++	void isMonthsFieldIntTest() {
++		try {
++			Class<?> clazz = Class.forName(CLIENT_TYPE);
++			Field field = clazz.getDeclaredField("months");
++			assertTrue(field.getType().equals(int.class));
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		} catch (NoSuchFieldException e) {
++			fail("There is no mounths field");
++		}
++	}
++
++	@DisplayName("Check that 'discount' method is public")
++	@Test
++	void isDiscountMethodPublic() {
++		boolean isDiscountMethod = false;
++		try {
++			Class<?> clazz = Class.forName(CLIENT_TYPE);
++			Method[] declaredMethods = clazz.getDeclaredMethods();
++			for (Method method : declaredMethods) {
++				if ("discount".equals(method.getName())) {
++					assertTrue(Modifier.isPublic(method.getModifiers()));
++					isDiscountMethod = true;
++				}
++			}
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++		assertTrue(isDiscountMethod);
++	}
++
++	@DisplayName("Check that ClientType enum has a constructor")
++	@Test
++	void hasClientTypeConstructorTest() {
++		try {
++			Class<?> clazz = Class.forName(CLIENT_TYPE);
++			Constructor<?>[] constructors = clazz.getDeclaredConstructors();
++			assertNotNull(constructors);
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++	}
++
++	private static Stream<Arguments> providePriceWithDiscountForClientType() {
++		return Stream.of(Arguments.of(1294.48, ClientType.NEW),
++				Arguments.of(1255.6456, ClientType.SILVER),
++				Arguments.of(1177.9768000000001, ClientType.GOLD),
++				Arguments.of(1022.6392000000001, ClientType.PLATINUM));
++	}
++
++	@DisplayName("Check that discount is calculated properly for special type of client")
++	@ParameterizedTest
++	@MethodSource("providePriceWithDiscountForClientType")
++	void drawLineTest(double price, ClientType clientType) {
++		assertEquals(price, clientType.discount() * 1294.48);
++	}
+ 
+ }

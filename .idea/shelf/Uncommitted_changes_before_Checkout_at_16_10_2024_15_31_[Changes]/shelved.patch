@@ -1,0 +1,95 @@
+Index: src/main/java/jom/com/softserve/s3/task3/Operation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package jom.com.softserve.s3.task3;\r\n\r\npublic class Operation {\r\n\tpublic static double addAtoB(int a, int b) {\r\n\t\t// Write your code here\r\n\t\treturn 0;\r\n\t}\r\n\r\n\tpublic static double subtractBfromA(int a, int b) {\r\n\t\t// Write your code here\r\n\t\treturn 0;\r\n\t}\r\n\r\n\tpublic static double multiplyAbyB(int a, int b) {\r\n\t\t// Write your code here\r\n\t\treturn 0;\r\n\t}\r\n\r\n\tpublic static double divideAbyB(int a, int b) {\r\n\t\t// Write your code here\r\n\t\treturn 0;\r\n\t}\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/jom/com/softserve/s3/task3/Operation.java b/src/main/java/jom/com/softserve/s3/task3/Operation.java
+--- a/src/main/java/jom/com/softserve/s3/task3/Operation.java	
++++ b/src/main/java/jom/com/softserve/s3/task3/Operation.java	
+@@ -1,23 +1,54 @@
+ package jom.com.softserve.s3.task3;
+ 
+ public class Operation {
+-	public static double addAtoB(int a, int b) {
+-		// Write your code here
+-		return 0;
+-	}
++
++
+ 
+-	public static double subtractBfromA(int a, int b) {
+-		// Write your code here
+-		return 0;
+-	}
++    public static double subtractBfromA(int a, int b) {
++        Strategy strategy = new Strategy() {
++            @Override
++            public double doOperation(int a, int b) {
++                return a - b;
++            }
++        };
++        System.out.println(strategy.doOperation(a, b));
++        return strategy.doOperation(a, b);
++    }
+ 
+-	public static double multiplyAbyB(int a, int b) {
+-		// Write your code here
+-		return 0;
+-	}
+-
+-	public static double divideAbyB(int a, int b) {
+-		// Write your code here
+-		return 0;
+-	}
++    public static double addAtoB(int a, int b) {
++        Strategy strategy = new Strategy() {
++            @Override
++            public double doOperation(int a, int b) {
++                return a + b;
++            }
++        };
++        System.out.println(strategy.doOperation(a, b));
++        return strategy.doOperation(a, b);
++    }
++    public static double divideAbyB(int a, int b) {
++        Strategy strategy = new Strategy() {
++            @Override
++            public double doOperation(int a, int b) {
++                return  a / b;
++            }
++        };
++        System.out.println(strategy.doOperation(a, b));
++        return strategy.doOperation(a, b);
++    }
++
++
++    public static double multiplyAbyB(int a, int b) {
++        Strategy strategy = new Strategy() {
++            @Override
++            public double doOperation(int a, int b) {
++                return a * b;
++            }
++        };
++        System.out.println(strategy.doOperation(a, b));
++        return strategy.doOperation(a, b);
++    }
++
++
+ }
++
++
+Index: src/main/java/jom/com/softserve/s3/task3/Strategy.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package jom.com.softserve.s3.task3;\r\n\r\npublic interface Strategy {\r\n\tdouble doOperation(int a, int b);\r\n}
+===================================================================
+diff --git a/src/main/java/jom/com/softserve/s3/task3/Strategy.java b/src/main/java/jom/com/softserve/s3/task3/Strategy.java
+--- a/src/main/java/jom/com/softserve/s3/task3/Strategy.java	
++++ b/src/main/java/jom/com/softserve/s3/task3/Strategy.java	
+@@ -2,4 +2,5 @@
+ 
+ public interface Strategy {
+ 	double doOperation(int a, int b);
++
+ }
+\ No newline at end of file

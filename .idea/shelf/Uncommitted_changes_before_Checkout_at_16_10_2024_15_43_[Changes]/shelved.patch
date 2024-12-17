@@ -1,0 +1,120 @@
+Index: src/main/java/jom/com/softserve/s3/task4/Line.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package jom.com.softserve.s3.task4;\r\n\r\n//Describe LineType enum here\r\n\r\npublic class Line {\r\n\t// Write method code here\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/jom/com/softserve/s3/task4/Line.java b/src/main/java/jom/com/softserve/s3/task4/Line.java
+--- a/src/main/java/jom/com/softserve/s3/task4/Line.java	
++++ b/src/main/java/jom/com/softserve/s3/task4/Line.java	
+@@ -1,7 +1,12 @@
+ package jom.com.softserve.s3.task4;
+ 
+-//Describe LineType enum here
++enum LineType {
++    SOLID , DOTTED, DASHED, DOUBLE;
++
++}
+ 
+ public class Line {
+-	// Write method code here
++    public static String drawLine(LineType lineType) {
++        return "The line is " + lineType.name().toLowerCase() + " type";
++    }
+ }
+Index: src/test/java/jom/com/softserve/s3/task4/Tas4Test.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package jom.com.softserve.s3.task4;\r\n\r\nimport static org.junit.jupiter.api.Assertions.assertEquals;\r\nimport static org.junit.jupiter.api.Assertions.assertTrue;\r\nimport static org.junit.jupiter.api.Assertions.fail;\r\n\r\nimport java.lang.reflect.Field;\r\nimport java.util.stream.Stream;\r\n\r\nimport org.junit.jupiter.api.DisplayName;\r\nimport org.junit.jupiter.api.Test;\r\nimport org.junit.jupiter.params.ParameterizedTest;\r\nimport org.junit.jupiter.params.provider.Arguments;\r\nimport org.junit.jupiter.params.provider.MethodSource;\r\nimport org.junit.jupiter.params.provider.ValueSource;\r\n\r\nclass Tas4Test {\r\n\r\n\tprivate static String LINE_TYPE = \"jom.com.softserve.s3.task4.LineType\";\r\n\r\n//\t@DisplayName(\"Check that LineType is enum\")\r\n//\t@Test\r\n//\tpublic void isLineTypeEnumTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(LINE_TYPE);\r\n//\t\t\tassertTrue(clazz.isEnum());\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"there is no LineType enum\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that LineType contains appropriate value\")\r\n//\t@ParameterizedTest\r\n//\t@ValueSource(strings = { \"SOLID\", \"DASHED\", \"DOTTED\", \"DOUBLE\" })\r\n//\tpublic void hasFieldTest(String name) {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(LINE_TYPE);\r\n//\t\t\tField[] fields = clazz.getDeclaredFields();\r\n//\t\t\tboolean isField = false;\r\n//\t\t\tfor (Field field : fields) {\r\n//\t\t\t\tif (name.equals(field.getName())) {\r\n//\t\t\t\t\tisField = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isField);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"there is no LineType enum\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that type of line matches its message\")\r\n//\t@ParameterizedTest\r\n//\t@MethodSource(\"provideStringsForIsEnum\")\r\n//\tvoid drawLineTest(LineType type, String expected) {\r\n//\t\tassertEquals(expected, Line.drawLine(type));\r\n//\t}\r\n//\r\n//\tprivate static Stream<Arguments> provideStringsForIsEnum() {\r\n//\t\treturn Stream.of(Arguments.of(LineType.DASHED, \"The line is dashed type\"),\r\n//\t\t\t\tArguments.of(LineType.DOTTED, \"The line is dotted type\"),\r\n//\t\t\t\tArguments.of(LineType.SOLID, \"The line is solid type\"));\r\n//\t}\r\n}\r\n
+===================================================================
+diff --git a/src/test/java/jom/com/softserve/s3/task4/Tas4Test.java b/src/test/java/jom/com/softserve/s3/task4/Tas4Test.java
+--- a/src/test/java/jom/com/softserve/s3/task4/Tas4Test.java	
++++ b/src/test/java/jom/com/softserve/s3/task4/Tas4Test.java	
+@@ -18,46 +18,46 @@
+ 
+ 	private static String LINE_TYPE = "jom.com.softserve.s3.task4.LineType";
+ 
+-//	@DisplayName("Check that LineType is enum")
+-//	@Test
+-//	public void isLineTypeEnumTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(LINE_TYPE);
+-//			assertTrue(clazz.isEnum());
+-//		} catch (ClassNotFoundException e) {
+-//			fail("there is no LineType enum");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that LineType contains appropriate value")
+-//	@ParameterizedTest
+-//	@ValueSource(strings = { "SOLID", "DASHED", "DOTTED", "DOUBLE" })
+-//	public void hasFieldTest(String name) {
+-//		try {
+-//			Class<?> clazz = Class.forName(LINE_TYPE);
+-//			Field[] fields = clazz.getDeclaredFields();
+-//			boolean isField = false;
+-//			for (Field field : fields) {
+-//				if (name.equals(field.getName())) {
+-//					isField = true;
+-//				}
+-//			}
+-//			assertTrue(isField);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("there is no LineType enum");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that type of line matches its message")
+-//	@ParameterizedTest
+-//	@MethodSource("provideStringsForIsEnum")
+-//	void drawLineTest(LineType type, String expected) {
+-//		assertEquals(expected, Line.drawLine(type));
+-//	}
+-//
+-//	private static Stream<Arguments> provideStringsForIsEnum() {
+-//		return Stream.of(Arguments.of(LineType.DASHED, "The line is dashed type"),
+-//				Arguments.of(LineType.DOTTED, "The line is dotted type"),
+-//				Arguments.of(LineType.SOLID, "The line is solid type"));
+-//	}
++	@DisplayName("Check that LineType is enum")
++	@Test
++	public void isLineTypeEnumTest() {
++		try {
++			Class<?> clazz = Class.forName(LINE_TYPE);
++			assertTrue(clazz.isEnum());
++		} catch (ClassNotFoundException e) {
++			fail("there is no LineType enum");
++		}
++	}
++
++	@DisplayName("Check that LineType contains appropriate value")
++	@ParameterizedTest
++	@ValueSource(strings = { "SOLID", "DASHED", "DOTTED", "DOUBLE" })
++	public void hasFieldTest(String name) {
++		try {
++			Class<?> clazz = Class.forName(LINE_TYPE);
++			Field[] fields = clazz.getDeclaredFields();
++			boolean isField = false;
++			for (Field field : fields) {
++				if (name.equals(field.getName())) {
++					isField = true;
++				}
++			}
++			assertTrue(isField);
++		} catch (ClassNotFoundException e) {
++			fail("there is no LineType enum");
++		}
++	}
++
++	@DisplayName("Check that type of line matches its message")
++	@ParameterizedTest
++	@MethodSource("provideStringsForIsEnum")
++	void drawLineTest(LineType type, String expected) {
++		assertEquals(expected, Line.drawLine(type));
++	}
++
++	private static Stream<Arguments> provideStringsForIsEnum() {
++		return Stream.of(Arguments.of(LineType.DASHED, "The line is dashed type"),
++				Arguments.of(LineType.DOTTED, "The line is dotted type"),
++				Arguments.of(LineType.SOLID, "The line is solid type"));
++	}
+ }

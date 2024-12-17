@@ -1,0 +1,394 @@
+Index: src/test/java/jom/com/softserve/s3/task2/Task2Test.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package jom.com.softserve.s3.task2;\r\n\r\nimport static org.junit.jupiter.api.Assertions.assertEquals;\r\nimport static org.junit.jupiter.api.Assertions.assertNotNull;\r\nimport static org.junit.jupiter.api.Assertions.assertTrue;\r\nimport static org.junit.jupiter.api.Assertions.fail;\r\n\r\nimport java.lang.reflect.Constructor;\r\nimport java.lang.reflect.Field;\r\nimport java.lang.reflect.Method;\r\nimport java.lang.reflect.Modifier;\r\nimport java.util.Arrays;\r\n\r\nimport org.junit.jupiter.api.DisplayName;\r\nimport org.junit.jupiter.api.Test;\r\n\r\nclass Task2Test {\r\n\r\n\tfinal private static String NAMED_LIST = \"jom.com.softserve.s3.task2.NameList\";\r\n\tfinal private static String ITERATOR = \"jom.com.softserve.s3.task2.NameList$Iterator\";\r\n\r\n//\t@DisplayName(\"Check that NameList class contains Iterator class\")\r\n//\t@Test\r\n//\tvoid hasNameListNonStaticNestedIteratorTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> outerClazz = Class.forName(NAMED_LIST);\r\n//\t\t\tClass<?> innerClazz = Class.forName(ITERATOR);\r\n//\t\t\tassertTrue(outerClazz.getEnclosingClass() == null && innerClazz.getEnclosingClass() != null\r\n//\t\t\t\t\t&& outerClazz.equals(innerClazz.getEnclosingClass())\r\n//\t\t\t\t\t&& !Modifier.isStatic(innerClazz.getModifiers()));\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"There is no such class\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that Iterator class has 'counter' field\")\r\n//\t@Test\r\n//\tvoid hasIteratorClassCounterFieldTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(ITERATOR);\r\n//\t\t\tField[] declaredFields = clazz.getDeclaredFields();\r\n//\t\t\tboolean isCounter = false;\r\n//\t\t\tfor (Field field : declaredFields) {\r\n//\t\t\t\tif (\"counter\".equals(field.getName())) {\r\n//\t\t\t\t\tisCounter = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isCounter);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"There is no such class\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'counter' field is private\")\r\n//\t@Test\r\n//\tvoid isCounterFieldPrivateTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(ITERATOR);\r\n//\t\t\tField[] declaredFields = clazz.getDeclaredFields();\r\n//\t\t\tboolean isCounter = false;\r\n//\t\t\tfor (Field field : declaredFields) {\r\n//\t\t\t\tif (\"counter\".equals(field.getName())) {\r\n//\t\t\t\t\tassertTrue(Modifier.isPrivate(field.getModifiers()));\r\n//\t\t\t\t\tisCounter = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isCounter);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"There is no such class\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that type of 'counter' field is int\")\r\n//\t@Test\r\n//\tvoid isCounterFieldIntTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(ITERATOR);\r\n//\t\t\tField[] declaredFields = clazz.getDeclaredFields();\r\n//\t\t\tboolean isCounter = false;\r\n//\t\t\tfor (Field field : declaredFields) {\r\n//\t\t\t\tif (\"counter\".equals(field.getName())) {\r\n//\t\t\t\t\tassertTrue(field.getType().equals(int.class));\r\n//\t\t\t\t\tisCounter = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isCounter);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"There is no such class\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that Iterator class has 'hasNext' method\")\r\n//\t@Test\r\n//\tvoid hasIteratorHasNextMethodTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(ITERATOR);\r\n//\t\t\tMethod[] methods = clazz.getDeclaredMethods();\r\n//\t\t\tboolean isHasNext = false;\r\n//\t\t\tfor (Method method : methods) {\r\n//\t\t\t\tif (\"hasNext\".equals(method.getName())) {\r\n//\t\t\t\t\tisHasNext = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isHasNext);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"There is no such class\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'hasNext' method is public\")\r\n//\t@Test\r\n//\tvoid isHasNextMethodPublicTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(ITERATOR);\r\n//\t\t\tMethod[] methods = clazz.getDeclaredMethods();\r\n//\t\t\tboolean isHasNext = false;\r\n//\t\t\tfor (Method method : methods) {\r\n//\t\t\t\tif (\"hasNext\".equals(method.getName())) {\r\n//\t\t\t\t\tassertTrue(Modifier.isPublic(method.getModifiers()));\r\n//\t\t\t\t\tisHasNext = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isHasNext);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"There is no such class\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'hasNext' method returns boolean value\")\r\n//\t@Test\r\n//\tvoid hasHasNextMethodReturnTypeTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(ITERATOR);\r\n//\t\t\tMethod[] methods = clazz.getDeclaredMethods();\r\n//\t\t\tboolean isHasNext = false;\r\n//\t\t\tfor (Method method : methods) {\r\n//\t\t\t\tif (\"hasNext\".equals(method.getName())) {\r\n//\t\t\t\t\tassertEquals(method.getReturnType(), boolean.class);\r\n//\t\t\t\t\tisHasNext = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isHasNext);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"There is no such class\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that Iterator class contains a constructor\")\r\n//\t@Test\r\n//\tvoid hasIteratorClassConstructorTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(ITERATOR);\r\n//\t\t\tConstructor<?>[] constructors = clazz.getDeclaredConstructors();\r\n//\t\t\tassertNotNull(constructors);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that Itarator class has private constructor\")\r\n//\t@Test\r\n//\tvoid hasIteratorClassPrivateConstructorTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(ITERATOR);\r\n//\t\t\tConstructor<?>[] constructors = clazz.getDeclaredConstructors();\r\n//\t\t\tboolean isPrivateConstructor = false;\r\n//\t\t\tfor (Constructor<?> constructor : constructors) {\r\n//\t\t\t\tif (Modifier.isPrivate(constructor.getModifiers())) {\r\n//\t\t\t\t\tisPrivateConstructor = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isPrivateConstructor);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException or there is no private constructor\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that Iterator works properly\")\r\n//\t@Test\r\n//\tpublic void checkIfCorrectIteratorImplements() {\r\n//\t\tint counter = 0;\r\n//\t\tString[] expected = { \"Mike\", \"Emily\", \"Nick\", \"Patric\", \"Sara\" };\r\n//\t\tString[] actual = new String[5];\r\n//\t\tfor (NameList.Iterator iterator = new NameList().getIterator(); iterator.hasNext();) {\r\n//\t\t\tactual[counter++] = iterator.next();\r\n//\t\t}\r\n//\t\tassertTrue(Arrays.equals(expected, actual) && counter == expected.length);\r\n//\t}\r\n}\r\n
+===================================================================
+diff --git a/src/test/java/jom/com/softserve/s3/task2/Task2Test.java b/src/test/java/jom/com/softserve/s3/task2/Task2Test.java
+--- a/src/test/java/jom/com/softserve/s3/task2/Task2Test.java	
++++ b/src/test/java/jom/com/softserve/s3/task2/Task2Test.java	
+@@ -19,171 +19,171 @@
+ 	final private static String NAMED_LIST = "jom.com.softserve.s3.task2.NameList";
+ 	final private static String ITERATOR = "jom.com.softserve.s3.task2.NameList$Iterator";
+ 
+-//	@DisplayName("Check that NameList class contains Iterator class")
+-//	@Test
+-//	void hasNameListNonStaticNestedIteratorTest() {
+-//		try {
+-//			Class<?> outerClazz = Class.forName(NAMED_LIST);
+-//			Class<?> innerClazz = Class.forName(ITERATOR);
+-//			assertTrue(outerClazz.getEnclosingClass() == null && innerClazz.getEnclosingClass() != null
+-//					&& outerClazz.equals(innerClazz.getEnclosingClass())
+-//					&& !Modifier.isStatic(innerClazz.getModifiers()));
+-//		} catch (ClassNotFoundException e) {
+-//			fail("There is no such class");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that Iterator class has 'counter' field")
+-//	@Test
+-//	void hasIteratorClassCounterFieldTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(ITERATOR);
+-//			Field[] declaredFields = clazz.getDeclaredFields();
+-//			boolean isCounter = false;
+-//			for (Field field : declaredFields) {
+-//				if ("counter".equals(field.getName())) {
+-//					isCounter = true;
+-//				}
+-//			}
+-//			assertTrue(isCounter);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("There is no such class");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that 'counter' field is private")
+-//	@Test
+-//	void isCounterFieldPrivateTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(ITERATOR);
+-//			Field[] declaredFields = clazz.getDeclaredFields();
+-//			boolean isCounter = false;
+-//			for (Field field : declaredFields) {
+-//				if ("counter".equals(field.getName())) {
+-//					assertTrue(Modifier.isPrivate(field.getModifiers()));
+-//					isCounter = true;
+-//				}
+-//			}
+-//			assertTrue(isCounter);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("There is no such class");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that type of 'counter' field is int")
+-//	@Test
+-//	void isCounterFieldIntTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(ITERATOR);
+-//			Field[] declaredFields = clazz.getDeclaredFields();
+-//			boolean isCounter = false;
+-//			for (Field field : declaredFields) {
+-//				if ("counter".equals(field.getName())) {
+-//					assertTrue(field.getType().equals(int.class));
+-//					isCounter = true;
+-//				}
+-//			}
+-//			assertTrue(isCounter);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("There is no such class");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that Iterator class has 'hasNext' method")
+-//	@Test
+-//	void hasIteratorHasNextMethodTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(ITERATOR);
+-//			Method[] methods = clazz.getDeclaredMethods();
+-//			boolean isHasNext = false;
+-//			for (Method method : methods) {
+-//				if ("hasNext".equals(method.getName())) {
+-//					isHasNext = true;
+-//				}
+-//			}
+-//			assertTrue(isHasNext);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("There is no such class");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that 'hasNext' method is public")
+-//	@Test
+-//	void isHasNextMethodPublicTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(ITERATOR);
+-//			Method[] methods = clazz.getDeclaredMethods();
+-//			boolean isHasNext = false;
+-//			for (Method method : methods) {
+-//				if ("hasNext".equals(method.getName())) {
+-//					assertTrue(Modifier.isPublic(method.getModifiers()));
+-//					isHasNext = true;
+-//				}
+-//			}
+-//			assertTrue(isHasNext);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("There is no such class");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that 'hasNext' method returns boolean value")
+-//	@Test
+-//	void hasHasNextMethodReturnTypeTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(ITERATOR);
+-//			Method[] methods = clazz.getDeclaredMethods();
+-//			boolean isHasNext = false;
+-//			for (Method method : methods) {
+-//				if ("hasNext".equals(method.getName())) {
+-//					assertEquals(method.getReturnType(), boolean.class);
+-//					isHasNext = true;
+-//				}
+-//			}
+-//			assertTrue(isHasNext);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("There is no such class");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that Iterator class contains a constructor")
+-//	@Test
+-//	void hasIteratorClassConstructorTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(ITERATOR);
+-//			Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+-//			assertNotNull(constructors);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that Itarator class has private constructor")
+-//	@Test
+-//	void hasIteratorClassPrivateConstructorTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(ITERATOR);
+-//			Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+-//			boolean isPrivateConstructor = false;
+-//			for (Constructor<?> constructor : constructors) {
+-//				if (Modifier.isPrivate(constructor.getModifiers())) {
+-//					isPrivateConstructor = true;
+-//				}
+-//			}
+-//			assertTrue(isPrivateConstructor);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException or there is no private constructor");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that Iterator works properly")
+-//	@Test
+-//	public void checkIfCorrectIteratorImplements() {
+-//		int counter = 0;
+-//		String[] expected = { "Mike", "Emily", "Nick", "Patric", "Sara" };
+-//		String[] actual = new String[5];
+-//		for (NameList.Iterator iterator = new NameList().getIterator(); iterator.hasNext();) {
+-//			actual[counter++] = iterator.next();
+-//		}
+-//		assertTrue(Arrays.equals(expected, actual) && counter == expected.length);
+-//	}
++	@DisplayName("Check that NameList class contains Iterator class")
++	@Test
++	void hasNameListNonStaticNestedIteratorTest() {
++		try {
++			Class<?> outerClazz = Class.forName(NAMED_LIST);
++			Class<?> innerClazz = Class.forName(ITERATOR);
++			assertTrue(outerClazz.getEnclosingClass() == null && innerClazz.getEnclosingClass() != null
++					&& outerClazz.equals(innerClazz.getEnclosingClass())
++					&& !Modifier.isStatic(innerClazz.getModifiers()));
++		} catch (ClassNotFoundException e) {
++			fail("There is no such class");
++		}
++	}
++
++	@DisplayName("Check that Iterator class has 'counter' field")
++	@Test
++	void hasIteratorClassCounterFieldTest() {
++		try {
++			Class<?> clazz = Class.forName(ITERATOR);
++			Field[] declaredFields = clazz.getDeclaredFields();
++			boolean isCounter = false;
++			for (Field field : declaredFields) {
++				if ("counter".equals(field.getName())) {
++					isCounter = true;
++				}
++			}
++			assertTrue(isCounter);
++		} catch (ClassNotFoundException e) {
++			fail("There is no such class");
++		}
++	}
++
++	@DisplayName("Check that 'counter' field is private")
++	@Test
++	void isCounterFieldPrivateTest() {
++		try {
++			Class<?> clazz = Class.forName(ITERATOR);
++			Field[] declaredFields = clazz.getDeclaredFields();
++			boolean isCounter = false;
++			for (Field field : declaredFields) {
++				if ("counter".equals(field.getName())) {
++					assertTrue(Modifier.isPrivate(field.getModifiers()));
++					isCounter = true;
++				}
++			}
++			assertTrue(isCounter);
++		} catch (ClassNotFoundException e) {
++			fail("There is no such class");
++		}
++	}
++
++	@DisplayName("Check that type of 'counter' field is int")
++	@Test
++	void isCounterFieldIntTest() {
++		try {
++			Class<?> clazz = Class.forName(ITERATOR);
++			Field[] declaredFields = clazz.getDeclaredFields();
++			boolean isCounter = false;
++			for (Field field : declaredFields) {
++				if ("counter".equals(field.getName())) {
++					assertTrue(field.getType().equals(int.class));
++					isCounter = true;
++				}
++			}
++			assertTrue(isCounter);
++		} catch (ClassNotFoundException e) {
++			fail("There is no such class");
++		}
++	}
++
++	@DisplayName("Check that Iterator class has 'hasNext' method")
++	@Test
++	void hasIteratorHasNextMethodTest() {
++		try {
++			Class<?> clazz = Class.forName(ITERATOR);
++			Method[] methods = clazz.getDeclaredMethods();
++			boolean isHasNext = false;
++			for (Method method : methods) {
++				if ("hasNext".equals(method.getName())) {
++					isHasNext = true;
++				}
++			}
++			assertTrue(isHasNext);
++		} catch (ClassNotFoundException e) {
++			fail("There is no such class");
++		}
++	}
++
++	@DisplayName("Check that 'hasNext' method is public")
++	@Test
++	void isHasNextMethodPublicTest() {
++		try {
++			Class<?> clazz = Class.forName(ITERATOR);
++			Method[] methods = clazz.getDeclaredMethods();
++			boolean isHasNext = false;
++			for (Method method : methods) {
++				if ("hasNext".equals(method.getName())) {
++					assertTrue(Modifier.isPublic(method.getModifiers()));
++					isHasNext = true;
++				}
++			}
++			assertTrue(isHasNext);
++		} catch (ClassNotFoundException e) {
++			fail("There is no such class");
++		}
++	}
++
++	@DisplayName("Check that 'hasNext' method returns boolean value")
++	@Test
++	void hasHasNextMethodReturnTypeTest() {
++		try {
++			Class<?> clazz = Class.forName(ITERATOR);
++			Method[] methods = clazz.getDeclaredMethods();
++			boolean isHasNext = false;
++			for (Method method : methods) {
++				if ("hasNext".equals(method.getName())) {
++					assertEquals(method.getReturnType(), boolean.class);
++					isHasNext = true;
++				}
++			}
++			assertTrue(isHasNext);
++		} catch (ClassNotFoundException e) {
++			fail("There is no such class");
++		}
++	}
++
++	@DisplayName("Check that Iterator class contains a constructor")
++	@Test
++	void hasIteratorClassConstructorTest() {
++		try {
++			Class<?> clazz = Class.forName(ITERATOR);
++			Constructor<?>[] constructors = clazz.getDeclaredConstructors();
++			assertNotNull(constructors);
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++	}
++
++	@DisplayName("Check that Itarator class has private constructor")
++	@Test
++	void hasIteratorClassPrivateConstructorTest() {
++		try {
++			Class<?> clazz = Class.forName(ITERATOR);
++			Constructor<?>[] constructors = clazz.getDeclaredConstructors();
++			boolean isPrivateConstructor = false;
++			for (Constructor<?> constructor : constructors) {
++				if (Modifier.isPrivate(constructor.getModifiers())) {
++					isPrivateConstructor = true;
++				}
++			}
++			assertTrue(isPrivateConstructor);
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException or there is no private constructor");
++		}
++	}
++
++	@DisplayName("Check that Iterator works properly")
++	@Test
++	public void checkIfCorrectIteratorImplements() {
++		int counter = 0;
++		String[] expected = { "Mike", "Emily", "Nick", "Patric", "Sara" };
++		String[] actual = new String[5];
++		for (NameList.Iterator iterator = new NameList().getIterator(); iterator.hasNext();) {
++			actual[counter++] = iterator.next();
++		}
++		assertTrue(Arrays.equals(expected, actual) && counter == expected.length);
++	}
+ }
+Index: src/main/java/jom/com/softserve/s3/task2/NameList.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package jom.com.softserve.s3.task2;\r\n\r\nclass NameList {\r\n\tprivate final String[] names = { \"Mike\", \"Emily\", \"Nick\", \"Patric\", \"Sara\" };\r\n\r\n//\tpublic Iterator getIterator() {\r\n//\t\treturn new Iterator();\r\n//\t}\r\n\r\n\t// Write your code here\r\n}
+===================================================================
+diff --git a/src/main/java/jom/com/softserve/s3/task2/NameList.java b/src/main/java/jom/com/softserve/s3/task2/NameList.java
+--- a/src/main/java/jom/com/softserve/s3/task2/NameList.java	
++++ b/src/main/java/jom/com/softserve/s3/task2/NameList.java	
+@@ -1,11 +1,31 @@
+ package jom.com.softserve.s3.task2;
+ 
+ class NameList {
+-	private final String[] names = { "Mike", "Emily", "Nick", "Patric", "Sara" };
++    private final String[] names = {"Mike", "Emily", "Nick", "Patric", "Sara"};
+ 
+-//	public Iterator getIterator() {
+-//		return new Iterator();
+-//	}
++    public Iterator getIterator() {
++        return new Iterator();
++    }
++
++    public class Iterator implements java.util.Iterator<String> {
++        private int counter = 0;
++        private String[] list;
++
++        private Iterator() {
++            list = names;
++        }
++
+ 
+-	// Write your code here
+-}
+\ No newline at end of file
++        @Override
++        public boolean hasNext() {
++            return counter < list.length;
++        }
++
++        @Override
++        public String next() {
++            int i = counter;
++            counter = i + 1;
++            return list[i];
++        }
++    }
++}

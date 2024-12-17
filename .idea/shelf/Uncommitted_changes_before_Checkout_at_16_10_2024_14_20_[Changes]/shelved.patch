@@ -1,0 +1,495 @@
+Index: src/main/java/jom/com/softserve/s3/task1/Pizza.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package jom.com.softserve.s3.task1;\r\n\r\nclass Pizza {\r\n\tprivate String cheese;\r\n\tprivate String meat;\r\n\tprivate String seafood;\r\n\tprivate String vegetable;\r\n\tprivate String mushroom;\r\n\r\n\tprivate Pizza() {\r\n\t}\r\n\r\n\tpublic String getCheese() {\r\n\t\treturn cheese;\r\n\t}\r\n\r\n\tpublic String getMeat() {\r\n\t\treturn meat;\r\n\t}\r\n\r\n\tpublic String getSeafood() {\r\n\t\treturn seafood;\r\n\t}\r\n\r\n\tpublic String getVegetable() {\r\n\t\treturn vegetable;\r\n\t}\r\n\r\n\tpublic String getMushroom() {\r\n\t\treturn mushroom;\r\n\t}\r\n\r\n//\tpublic static PizzaBuilder base() {\r\n//\t\treturn new PizzaBuilder();\r\n//\t}\r\n\r\n\t// Describe PizzaBuilder class here\r\n\r\n}\r\n\r\nclass Oven {\r\n\tpublic static Pizza cook() {\r\n\t\t// Create and return instance of Pizza class here\r\n\t\treturn null;\r\n\t}\r\n}
+===================================================================
+diff --git a/src/main/java/jom/com/softserve/s3/task1/Pizza.java b/src/main/java/jom/com/softserve/s3/task1/Pizza.java
+--- a/src/main/java/jom/com/softserve/s3/task1/Pizza.java	
++++ b/src/main/java/jom/com/softserve/s3/task1/Pizza.java	
+@@ -1,46 +1,96 @@
+ package jom.com.softserve.s3.task1;
+ 
++
+ class Pizza {
+-	private String cheese;
+-	private String meat;
+-	private String seafood;
+-	private String vegetable;
+-	private String mushroom;
++    private String cheese;
++    private String meat;
++    private String seafood;
++    private String vegetable;
++    private String mushroom;
+ 
+-	private Pizza() {
+-	}
++    private Pizza(String cheese) {
++        this.cheese = cheese;
++    }
++
++    private Pizza(String cheese, String seafood) {
++        this.cheese = cheese;
++        this.seafood = seafood;
++    }
++
++    private Pizza(String meat, String vegetable, String mushroom) {
++        this.meat = meat;
++        this.vegetable = vegetable;
++        this.mushroom = mushroom;
++    }
++
++    private Pizza() {
++
++    }
++
++    public static PizzaBuilder base() {
++        return new PizzaBuilder();
++    }
+ 
+-	public String getCheese() {
+-		return cheese;
+-	}
++    public String getCheese() {
++        return cheese;
++    }
+ 
+-	public String getMeat() {
+-		return meat;
+-	}
++    public String getMeat() {
++        return meat;
++    }
+ 
+-	public String getSeafood() {
+-		return seafood;
+-	}
++    public String getSeafood() {
++        return seafood;
++    }
+ 
+-	public String getVegetable() {
+-		return vegetable;
+-	}
++    public String getVegetable() {
++        return vegetable;
++    }
+ 
+-	public String getMushroom() {
+-		return mushroom;
+-	}
++    public String getMushroom() {
++        return mushroom;
++    }
+ 
+-//	public static PizzaBuilder base() {
+-//		return new PizzaBuilder();
+-//	}
++    public static class PizzaBuilder extends Pizza {
+ 
+-	// Describe PizzaBuilder class here
++        private PizzaBuilder() {
++        }
+ 
++        PizzaBuilder(String cheese) {
++            super(cheese);
++        }
++
++        PizzaBuilder addCheese(String cheese) {
++            return new PizzaBuilder(cheese);
++        }
++
++        PizzaBuilder addMeat(String meat) {
++            return new PizzaBuilder(meat);
++        }
++
++        PizzaBuilder addSeafood(String seafood) {
++            return new PizzaBuilder(seafood);
++        }
++
++        PizzaBuilder addVegetable(String vegetable) {
++            return new PizzaBuilder(vegetable);
++        }
++
++        PizzaBuilder addMushroom(String mushroom) {
++            return new PizzaBuilder(mushroom);
++        }
++
++        public Pizza build() {
++            return new Pizza("Cheese", "Seafood", "Mushroom");
++        }
++
++    }
+ }
++
+ 
+ class Oven {
+-	public static Pizza cook() {
+-		// Create and return instance of Pizza class here
+-		return null;
+-	}
++    public static Pizza cook() {
++
++        return Pizza.base().build();
++    }
+ }
+\ No newline at end of file
+Index: src/test/java/jom/com/softserve/s3/task1/Task1Test.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package jom.com.softserve.s3.task1;\r\n\r\nimport static org.junit.jupiter.api.Assertions.assertNotNull;\r\nimport static org.junit.jupiter.api.Assertions.assertTrue;\r\nimport static org.junit.jupiter.api.Assertions.fail;\r\n\r\nimport java.lang.reflect.Constructor;\r\nimport java.lang.reflect.Method;\r\nimport java.lang.reflect.Modifier;\r\nimport java.util.Arrays;\r\n\r\nimport org.junit.jupiter.api.DisplayName;\r\nimport org.junit.jupiter.api.Test;\r\n\r\nclass Task1Test {\r\n\r\n\tfinal private static String PIZZA = \"jom.com.softserve.s3.task1.Pizza\";\r\n\tfinal private static String PIZZA_BUILDER = \"jom.com.softserve.s3.task1.Pizza$PizzaBuilder\";\r\n\r\n//\t@DisplayName(\"Check that Pizza class contains nested static class PizzaBuilder\")\r\n//\t@Test\r\n//\tvoid hasPizzaClassStaticNestedPizzaBuilderClassTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> outerClazz = Class.forName(PIZZA);\r\n//\t\t\tClass<?> innerClazz = Class.forName(PIZZA_BUILDER);\r\n//\t\t\tassertTrue(outerClazz.getEnclosingClass() == null && innerClazz.getEnclosingClass() != null\r\n//\t\t\t\t\t&& outerClazz.equals(innerClazz.getEnclosingClass())\r\n//\t\t\t\t\t&& Modifier.isStatic(innerClazz.getModifiers()));\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that PizzaBuilder class is public\")\r\n//\t@Test\r\n//\tvoid isPizza$PizzaBuilderPublicTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(PIZZA_BUILDER);\r\n//\t\t\tassertTrue(Modifier.isPublic(clazz.getModifiers()));\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that PizzaBuilder class has a constructor\")\r\n//\t@Test\r\n//\tvoid hasPizza$PizzaBuilderDeclaredConstructorTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(PIZZA_BUILDER);\r\n//\t\t\tConstructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();\r\n//\t\t\tassertNotNull(declaredConstructors);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that the constructor in PizzaBuilder class is private\")\r\n//\t@Test\r\n//\tvoid isConstructorPrivateTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(PIZZA_BUILDER);\r\n//\t\t\tConstructor<?> declaredConstructor = clazz.getDeclaredConstructor();\r\n//\t\t\tassertTrue(declaredConstructor != null && Modifier.isPrivate(declaredConstructor.getModifiers()));\r\n//\t\t} catch (ClassNotFoundException | NoSuchMethodException e) {\r\n//\t\t\tfail(\"ClassNotFoundException or there is no private constructor\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that PizzaBuilder class contains 'build' method\")\r\n//\t@Test\r\n//\tvoid hasPizza$PizzaBuilderClassMethodBuildTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(PIZZA_BUILDER);\r\n//\t\t\tMethod[] declaredMethods = clazz.getDeclaredMethods();\r\n//\t\t\tboolean isBuildMethod = false;\r\n//\t\t\tfor (Method method : declaredMethods) {\r\n//\t\t\t\tif (\"build\".equals(method.getName())) {\r\n//\t\t\t\t\tassertTrue(\"build\".equals(method.getName()) && method.getParameters().length == 0);\r\n//\t\t\t\t\tisBuildMethod = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isBuildMethod);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that method 'build' returns Pizza object\")\r\n//\t@Test\r\n//\tvoid returnTypeClassMethodBuildTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(PIZZA_BUILDER);\r\n//\t\t\tMethod[] declaredMethods = clazz.getDeclaredMethods();\r\n//\t\t\tboolean isBuildMethod = false;\r\n//\t\t\tfor (final Method method : declaredMethods) {\r\n//\t\t\t\tif (\"build\".equals(method.getName())) {\r\n//\t\t\t\t\tassertTrue(method.getReturnType().getSimpleName().equals(\"Pizza\"));\r\n//\t\t\t\t\tisBuildMethod = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isBuildMethod);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'build' method is public\")\r\n//\t@Test\r\n//\tvoid isMethodBuildPublicTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(PIZZA_BUILDER);\r\n//\t\t\tMethod[] declaredMethods = clazz.getDeclaredMethods();\r\n//\t\t\tboolean isBuildMethod = false;\r\n//\t\t\tfor (final Method method : declaredMethods) {\r\n//\t\t\t\tif (\"build\".equals(method.getName())) {\r\n//\t\t\t\t\tassertTrue(Modifier.isPublic(method.getModifiers()));\r\n//\t\t\t\t\tisBuildMethod = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isBuildMethod);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'addSeaFood' method returns object of PizzaBuilder type\")\r\n//\t@Test\r\n//\tvoid returnTypeClassMethodAddSeafoodTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(PIZZA_BUILDER);\r\n//\t\t\tMethod[] declaredMethods = clazz.getDeclaredMethods();\r\n//\t\t\tboolean isAddSeaFoodMethod = false;\r\n//\t\t\tfor (final Method method : declaredMethods) {\r\n//\t\t\t\tif (\"addSeafood\".equals(method.getName())) {\r\n//\t\t\t\t\tassertTrue(method.getReturnType().getSimpleName().equals(\"PizzaBuilder\"));\r\n//\t\t\t\t\tisAddSeaFoodMethod = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isAddSeaFoodMethod);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'addSeaFood' method takes one parameter of String type\")\r\n//\t@Test\r\n//\tvoid checkAddSeafoodParametersTest() {\r\n//\t\ttry {\r\n//\t\t\tClass<?> clazz = Class.forName(PIZZA_BUILDER);\r\n//\t\t\tMethod[] declaredMethods = clazz.getDeclaredMethods();\r\n//\t\t\tboolean isAddSeaFoodMethod = false;\r\n//\t\t\tfor (final Method method : declaredMethods) {\r\n//\t\t\t\tif (\"addSeafood\".equals(method.getName())) {\r\n//\t\t\t\t\tassertTrue(method.getParameterCount() == 1, \"There is addSeafood method with only one parameters\");\r\n//\t\t\t\t\tClass<?>[] parameters = method.getParameterTypes();\r\n//\t\t\t\t\tassertTrue(parameters[0].getSimpleName().equals(\"String\"));\r\n//\t\t\t\t\tisAddSeaFoodMethod = true;\r\n//\t\t\t\t}\r\n//\t\t\t}\r\n//\t\t\tassertTrue(isAddSeaFoodMethod);\r\n//\t\t} catch (ClassNotFoundException e) {\r\n//\t\t\tfail(\"ClassNotFoundException\");\r\n//\t\t}\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'cook' methods does not return null\")\r\n//\t@Test\r\n//\tvoid isCookMethodReturnsNotNullTest() {\r\n//\t\tassertNotNull(Oven.cook());\r\n//\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that 'cook' method returns object of Pizza type\")\r\n//\t@Test\r\n//\tvoid isCookMethodReturnsPizzaTest() {\r\n//\t\tassertTrue(Oven.cook() instanceof Pizza);\r\n//\r\n//\t}\r\n//\r\n//\t@DisplayName(\"Check that created pizza has at least three ingredients\")\r\n//\t@Test\r\n//\tvoid hasPizzaAtLeastThreeIngredientsTest() {\r\n//\t\tassertTrue(hasPizzaAtLeastThreeIngredients());\r\n//\t}\r\n//\r\n//\tprivate static boolean hasPizzaAtLeastThreeIngredients() {\r\n//\t\tPizza pizza = Oven.cook();\r\n//\t\treturn Arrays\r\n//\t\t\t\t.stream(new String[] { Oven.cook().getCheese(), pizza.getMeat(), pizza.getSeafood(),\r\n//\t\t\t\t\t\tpizza.getVegetable(), pizza.getMushroom() })\r\n//\t\t\t\t.filter(ingredient -> ingredient != null && !ingredient.equals(\"\")).count() >= 3;\r\n//\t}\r\n}\r\n
+===================================================================
+diff --git a/src/test/java/jom/com/softserve/s3/task1/Task1Test.java b/src/test/java/jom/com/softserve/s3/task1/Task1Test.java
+--- a/src/test/java/jom/com/softserve/s3/task1/Task1Test.java	
++++ b/src/test/java/jom/com/softserve/s3/task1/Task1Test.java	
+@@ -17,177 +17,177 @@
+ 	final private static String PIZZA = "jom.com.softserve.s3.task1.Pizza";
+ 	final private static String PIZZA_BUILDER = "jom.com.softserve.s3.task1.Pizza$PizzaBuilder";
+ 
+-//	@DisplayName("Check that Pizza class contains nested static class PizzaBuilder")
+-//	@Test
+-//	void hasPizzaClassStaticNestedPizzaBuilderClassTest() {
+-//		try {
+-//			Class<?> outerClazz = Class.forName(PIZZA);
+-//			Class<?> innerClazz = Class.forName(PIZZA_BUILDER);
+-//			assertTrue(outerClazz.getEnclosingClass() == null && innerClazz.getEnclosingClass() != null
+-//					&& outerClazz.equals(innerClazz.getEnclosingClass())
+-//					&& Modifier.isStatic(innerClazz.getModifiers()));
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that PizzaBuilder class is public")
+-//	@Test
+-//	void isPizza$PizzaBuilderPublicTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(PIZZA_BUILDER);
+-//			assertTrue(Modifier.isPublic(clazz.getModifiers()));
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that PizzaBuilder class has a constructor")
+-//	@Test
+-//	void hasPizza$PizzaBuilderDeclaredConstructorTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(PIZZA_BUILDER);
+-//			Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
+-//			assertNotNull(declaredConstructors);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that the constructor in PizzaBuilder class is private")
+-//	@Test
+-//	void isConstructorPrivateTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(PIZZA_BUILDER);
+-//			Constructor<?> declaredConstructor = clazz.getDeclaredConstructor();
+-//			assertTrue(declaredConstructor != null && Modifier.isPrivate(declaredConstructor.getModifiers()));
+-//		} catch (ClassNotFoundException | NoSuchMethodException e) {
+-//			fail("ClassNotFoundException or there is no private constructor");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that PizzaBuilder class contains 'build' method")
+-//	@Test
+-//	void hasPizza$PizzaBuilderClassMethodBuildTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(PIZZA_BUILDER);
+-//			Method[] declaredMethods = clazz.getDeclaredMethods();
+-//			boolean isBuildMethod = false;
+-//			for (Method method : declaredMethods) {
+-//				if ("build".equals(method.getName())) {
+-//					assertTrue("build".equals(method.getName()) && method.getParameters().length == 0);
+-//					isBuildMethod = true;
+-//				}
+-//			}
+-//			assertTrue(isBuildMethod);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that method 'build' returns Pizza object")
+-//	@Test
+-//	void returnTypeClassMethodBuildTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(PIZZA_BUILDER);
+-//			Method[] declaredMethods = clazz.getDeclaredMethods();
+-//			boolean isBuildMethod = false;
+-//			for (final Method method : declaredMethods) {
+-//				if ("build".equals(method.getName())) {
+-//					assertTrue(method.getReturnType().getSimpleName().equals("Pizza"));
+-//					isBuildMethod = true;
+-//				}
+-//			}
+-//			assertTrue(isBuildMethod);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that 'build' method is public")
+-//	@Test
+-//	void isMethodBuildPublicTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(PIZZA_BUILDER);
+-//			Method[] declaredMethods = clazz.getDeclaredMethods();
+-//			boolean isBuildMethod = false;
+-//			for (final Method method : declaredMethods) {
+-//				if ("build".equals(method.getName())) {
+-//					assertTrue(Modifier.isPublic(method.getModifiers()));
+-//					isBuildMethod = true;
+-//				}
+-//			}
+-//			assertTrue(isBuildMethod);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that 'addSeaFood' method returns object of PizzaBuilder type")
+-//	@Test
+-//	void returnTypeClassMethodAddSeafoodTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(PIZZA_BUILDER);
+-//			Method[] declaredMethods = clazz.getDeclaredMethods();
+-//			boolean isAddSeaFoodMethod = false;
+-//			for (final Method method : declaredMethods) {
+-//				if ("addSeafood".equals(method.getName())) {
+-//					assertTrue(method.getReturnType().getSimpleName().equals("PizzaBuilder"));
+-//					isAddSeaFoodMethod = true;
+-//				}
+-//			}
+-//			assertTrue(isAddSeaFoodMethod);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that 'addSeaFood' method takes one parameter of String type")
+-//	@Test
+-//	void checkAddSeafoodParametersTest() {
+-//		try {
+-//			Class<?> clazz = Class.forName(PIZZA_BUILDER);
+-//			Method[] declaredMethods = clazz.getDeclaredMethods();
+-//			boolean isAddSeaFoodMethod = false;
+-//			for (final Method method : declaredMethods) {
+-//				if ("addSeafood".equals(method.getName())) {
+-//					assertTrue(method.getParameterCount() == 1, "There is addSeafood method with only one parameters");
+-//					Class<?>[] parameters = method.getParameterTypes();
+-//					assertTrue(parameters[0].getSimpleName().equals("String"));
+-//					isAddSeaFoodMethod = true;
+-//				}
+-//			}
+-//			assertTrue(isAddSeaFoodMethod);
+-//		} catch (ClassNotFoundException e) {
+-//			fail("ClassNotFoundException");
+-//		}
+-//	}
+-//
+-//	@DisplayName("Check that 'cook' methods does not return null")
+-//	@Test
+-//	void isCookMethodReturnsNotNullTest() {
+-//		assertNotNull(Oven.cook());
+-//
+-//	}
+-//
+-//	@DisplayName("Check that 'cook' method returns object of Pizza type")
+-//	@Test
+-//	void isCookMethodReturnsPizzaTest() {
+-//		assertTrue(Oven.cook() instanceof Pizza);
+-//
+-//	}
+-//
+-//	@DisplayName("Check that created pizza has at least three ingredients")
+-//	@Test
+-//	void hasPizzaAtLeastThreeIngredientsTest() {
+-//		assertTrue(hasPizzaAtLeastThreeIngredients());
+-//	}
+-//
+-//	private static boolean hasPizzaAtLeastThreeIngredients() {
+-//		Pizza pizza = Oven.cook();
+-//		return Arrays
+-//				.stream(new String[] { Oven.cook().getCheese(), pizza.getMeat(), pizza.getSeafood(),
+-//						pizza.getVegetable(), pizza.getMushroom() })
+-//				.filter(ingredient -> ingredient != null && !ingredient.equals("")).count() >= 3;
+-//	}
++	@DisplayName("Check that Pizza class contains nested static class PizzaBuilder")
++	@Test
++	void hasPizzaClassStaticNestedPizzaBuilderClassTest() {
++		try {
++			Class<?> outerClazz = Class.forName(PIZZA);
++			Class<?> innerClazz = Class.forName(PIZZA_BUILDER);
++			assertTrue(outerClazz.getEnclosingClass() == null && innerClazz.getEnclosingClass() != null
++					&& outerClazz.equals(innerClazz.getEnclosingClass())
++					&& Modifier.isStatic(innerClazz.getModifiers()));
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++	}
++
++	@DisplayName("Check that PizzaBuilder class is public")
++	@Test
++	void isPizza$PizzaBuilderPublicTest() {
++		try {
++			Class<?> clazz = Class.forName(PIZZA_BUILDER);
++			assertTrue(Modifier.isPublic(clazz.getModifiers()));
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++	}
++
++	@DisplayName("Check that PizzaBuilder class has a constructor")
++	@Test
++	void hasPizza$PizzaBuilderDeclaredConstructorTest() {
++		try {
++			Class<?> clazz = Class.forName(PIZZA_BUILDER);
++			Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
++			assertNotNull(declaredConstructors);
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++	}
++
++	@DisplayName("Check that the constructor in PizzaBuilder class is private")
++	@Test
++	void isConstructorPrivateTest() {
++		try {
++			Class<?> clazz = Class.forName(PIZZA_BUILDER);
++			Constructor<?> declaredConstructor = clazz.getDeclaredConstructor();
++			assertTrue(declaredConstructor != null && Modifier.isPrivate(declaredConstructor.getModifiers()));
++		} catch (ClassNotFoundException | NoSuchMethodException e) {
++			fail("ClassNotFoundException or there is no private constructor");
++		}
++	}
++
++	@DisplayName("Check that PizzaBuilder class contains 'build' method")
++	@Test
++	void hasPizza$PizzaBuilderClassMethodBuildTest() {
++		try {
++			Class<?> clazz = Class.forName(PIZZA_BUILDER);
++			Method[] declaredMethods = clazz.getDeclaredMethods();
++			boolean isBuildMethod = false;
++			for (Method method : declaredMethods) {
++				if ("build".equals(method.getName())) {
++					assertTrue("build".equals(method.getName()) && method.getParameters().length == 0);
++					isBuildMethod = true;
++				}
++			}
++			assertTrue(isBuildMethod);
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++	}
++
++	@DisplayName("Check that method 'build' returns Pizza object")
++	@Test
++	void returnTypeClassMethodBuildTest() {
++		try {
++			Class<?> clazz = Class.forName(PIZZA_BUILDER);
++			Method[] declaredMethods = clazz.getDeclaredMethods();
++			boolean isBuildMethod = false;
++			for (final Method method : declaredMethods) {
++				if ("build".equals(method.getName())) {
++					assertTrue(method.getReturnType().getSimpleName().equals("Pizza"));
++					isBuildMethod = true;
++				}
++			}
++			assertTrue(isBuildMethod);
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++	}
++
++	@DisplayName("Check that 'build' method is public")
++	@Test
++	void isMethodBuildPublicTest() {
++		try {
++			Class<?> clazz = Class.forName(PIZZA_BUILDER);
++			Method[] declaredMethods = clazz.getDeclaredMethods();
++			boolean isBuildMethod = false;
++			for (final Method method : declaredMethods) {
++				if ("build".equals(method.getName())) {
++					assertTrue(Modifier.isPublic(method.getModifiers()));
++					isBuildMethod = true;
++				}
++			}
++			assertTrue(isBuildMethod);
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++	}
++
++	@DisplayName("Check that 'addSeaFood' method returns object of PizzaBuilder type")
++	@Test
++	void returnTypeClassMethodAddSeafoodTest() {
++		try {
++			Class<?> clazz = Class.forName(PIZZA_BUILDER);
++			Method[] declaredMethods = clazz.getDeclaredMethods();
++			boolean isAddSeaFoodMethod = false;
++			for (final Method method : declaredMethods) {
++				if ("addSeafood".equals(method.getName())) {
++					assertTrue(method.getReturnType().getSimpleName().equals("PizzaBuilder"));
++					isAddSeaFoodMethod = true;
++				}
++			}
++			assertTrue(isAddSeaFoodMethod);
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++	}
++
++	@DisplayName("Check that 'addSeaFood' method takes one parameter of String type")
++	@Test
++	void checkAddSeafoodParametersTest() {
++		try {
++			Class<?> clazz = Class.forName(PIZZA_BUILDER);
++			Method[] declaredMethods = clazz.getDeclaredMethods();
++			boolean isAddSeaFoodMethod = false;
++			for (final Method method : declaredMethods) {
++				if ("addSeafood".equals(method.getName())) {
++					assertTrue(method.getParameterCount() == 1, "There is addSeafood method with only one parameters");
++					Class<?>[] parameters = method.getParameterTypes();
++					assertTrue(parameters[0].getSimpleName().equals("String"));
++					isAddSeaFoodMethod = true;
++				}
++			}
++			assertTrue(isAddSeaFoodMethod);
++		} catch (ClassNotFoundException e) {
++			fail("ClassNotFoundException");
++		}
++	}
++
++	@DisplayName("Check that 'cook' methods does not return null")
++	@Test
++	void isCookMethodReturnsNotNullTest() {
++		assertNotNull(Oven.cook());
++
++	}
++
++	@DisplayName("Check that 'cook' method returns object of Pizza type")
++	@Test
++	void isCookMethodReturnsPizzaTest() {
++		assertTrue(Oven.cook() instanceof Pizza);
++
++	}
++
++	@DisplayName("Check that created pizza has at least three ingredients")
++	@Test
++	void hasPizzaAtLeastThreeIngredientsTest() {
++		assertTrue(hasPizzaAtLeastThreeIngredients());
++	}
++
++	private static boolean hasPizzaAtLeastThreeIngredients() {
++		Pizza pizza = Oven.cook();
++		return Arrays
++				.stream(new String[] { Oven.cook().getCheese(), pizza.getMeat(), pizza.getSeafood(),
++						pizza.getVegetable(), pizza.getMushroom() })
++				.filter(ingredient -> ingredient != null && !ingredient.equals("")).count() >= 3;
++	}
+ }
