@@ -7,7 +7,27 @@ class Pizza {
 	private String vegetable;
 	private String mushroom;
 
+	private Pizza(String cheese) {
+		this.cheese = cheese;
+	}
+
+	private Pizza(String cheese, String seafood) {
+		this.cheese = cheese;
+		this.seafood = seafood;
+	}
+
+	private Pizza(String meat, String vegetable, String mushroom) {
+		this.meat = meat;
+		this.vegetable = vegetable;
+		this.mushroom = mushroom;
+	}
+
 	private Pizza() {
+
+	}
+
+	public static PizzaBuilder base() {
+		return new PizzaBuilder();
 	}
 
 	public String getCheese() {
@@ -30,17 +50,46 @@ class Pizza {
 		return mushroom;
 	}
 
-//	public static PizzaBuilder base() {
-//		return new PizzaBuilder();
-//	}
+	public static class PizzaBuilder extends Pizza {
 
-	// Describe PizzaBuilder class here
+		private PizzaBuilder() {
+		}
 
+		PizzaBuilder(String cheese) {
+			super(cheese);
+		}
+
+		PizzaBuilder addCheese(String cheese) {
+			return new PizzaBuilder(cheese);
+		}
+
+		PizzaBuilder addMeat(String meat) {
+			return new PizzaBuilder(meat);
+		}
+
+		PizzaBuilder addSeafood(String seafood) {
+			return new PizzaBuilder(seafood);
+		}
+
+		PizzaBuilder addVegetable(String vegetable) {
+			return new PizzaBuilder(vegetable);
+		}
+
+		PizzaBuilder addMushroom(String mushroom) {
+			return new PizzaBuilder(mushroom);
+		}
+
+		public Pizza build() {
+			return new Pizza("Cheese", "Seafood", "Mushroom");
+		}
+
+	}
 }
+
 
 class Oven {
 	public static Pizza cook() {
-		// Create and return instance of Pizza class here
-		return null;
+
+		return Pizza.base().build();
 	}
 }
